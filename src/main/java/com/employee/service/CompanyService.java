@@ -1,4 +1,4 @@
-package com.employee.entity.service;
+package com.employee.service;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import com.employee.entity.Company;
 
 @Service
 public interface CompanyService {
-
     public Company save(Company company);
 
     public List<Company> getAll();

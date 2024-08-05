@@ -1,4 +1,4 @@
-package com.employee.entity.service;
+package com.employee.service;
 
 import java.util.List;
 
@@ -9,8 +9,7 @@ import com.employee.entity.Employee;
 import com.employee.repository.EmployeeRepository;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
-
+public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -47,5 +46,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Long employeeId) {
         employeeRepository.deleteById(employeeId);
     }
-
 }

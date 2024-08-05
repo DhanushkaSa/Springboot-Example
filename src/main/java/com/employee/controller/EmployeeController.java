@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.employee.dto.EmployeeDTO;
 import com.employee.entity.Company;
 import com.employee.entity.Employee;
-import com.employee.entity.service.CompanyService;
-import com.employee.entity.service.EmployeeService;
+import com.employee.service.CompanyService;
+import com.employee.service.EmployeeService;
 
 @RestController
 public class EmployeeController {
@@ -47,29 +47,29 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/{employeeid}")
-    public ResponseEntity<?> get(@PathVariable Long employeeid){
-        Employee employee=employeeService.get(employeeid);
-        if(employee==null){
+    public ResponseEntity<?> get(@PathVariable Long employeeid) {
+        Employee employee = employeeService.get(employeeid);
+        if (employee == null) {
             return ResponseEntity.status(404).body("Insert employee ");
-        }
-        else{
-           return ResponseEntity.status(200).body(employee);
+        } else {
+            return ResponseEntity.status(200).body(employee);
         }
     }
 
     @PutMapping("/employee/{employeeid}")
-    public ResponseEntity<?>update(@PathVariable Long employeeid,@RequestBody Employee employee){
-              Employee updateemployee=employeeService.update(employeeid, employee);
-              if(updateemployee==null){
-                    return ResponseEntity.status(404).body("Update Fail");
-              }
-              else{
-                return ResponseEntity.status(200).body(updateemployee);
-              }
+    public ResponseEntity<?> update(@PathVariable Long employeeid, @RequestBody EmployeeDTO employee) {
+
+        Employee newEmployee = new Employee();
+        newEmployee.setName(employee.getName());
+        newEmployee.setAge(employee.getAge());
+        Company company = companyService.get(employee.getCompanyid());
+        newEmployee.setCompanyId(company);
+        return ResponseEntity.status(200).body(employeeService.update(employeeid, newEmployee));
+
     }
 
     @DeleteMapping("/employee/{employeeid}")
-    public void delete(@PathVariable Long employeeid){
-             employeeService.delete(employeeid);
+    public void delete(@PathVariable Long employeeid) {
+        employeeService.delete(employeeid);
     }
 }
